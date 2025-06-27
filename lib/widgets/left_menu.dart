@@ -36,7 +36,7 @@ class LeftMenu extends StatelessWidget {
           // Bottom button
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: _buildButton(Icons.brightness_6, "Mode", "mode"),
+            child: _buildButton(Icons.person, "User", "user"),
           )
         ],
       ),

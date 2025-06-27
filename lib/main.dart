@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:promodoor/pages/google_sign.dart';
+import 'package:promodoor/pages/auth_page.dart';
 import 'package:promodoor/pages/login_page.dart';
 import 'package:promodoor/pages/register_page.dart';
 import 'package:promodoor/pages/settings_model.dart';
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Web Dashboard',
-      home: LoginPage(),
+      home: AuthPage(),
       debugShowCheckedModeBanner: false,
 
       // ✅ Add this:

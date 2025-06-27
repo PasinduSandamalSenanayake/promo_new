@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../pages/user_page.dart';
 import '../widgets/left_menu.dart';
 import '../pages/time_page.dart';
 import '../pages/settings_page.dart';
@@ -21,8 +22,8 @@ class _DashboardLayoutState extends State<DashboardLayout> {
         case 'settings':
           _currentPage = SettingsPage();
           break;
-          // case 'mode':
-          //   _currentPage = ModePage();
+        case 'user':
+          _currentPage = UserPage();
           break;
         default:
           _currentPage = TimePage();
