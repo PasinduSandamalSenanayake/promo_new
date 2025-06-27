@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "219608580090",
+    "project_id": "timer-app-db3c4",
+    "storage_bucket": "timer-app-db3c4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219608580090:android:2ec6d9ca99f37b72a26e43",
+        "android_client_info": {
+          "package_name": "com.example.promodoor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlFvCEqsDyiOGDDXMhHN1vLSRo3DCVErI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

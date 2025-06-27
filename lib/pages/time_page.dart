@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'settings_model.dart';
 
@@ -22,19 +24,74 @@ class _TimePageState extends State<TimePage> {
   bool isRunning = false;
   bool isLoaded = false;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     // addPostFrameCallback ensures that the context is fully built before accessing it
+  //     final settings = Provider.of<SettingsModel>(context, listen: false);
+  //     durations = settings.allDurations;
+  //     setState(() {
+  //       totalDuration = durations[currentIndex];
+  //       remaining = totalDuration;
+  //       isLoaded = true;
+  //     });
+  //   });
+  // }
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // addPostFrameCallback ensures that the context is fully built before accessing it
-      final settings = Provider.of<SettingsModel>(context, listen: false);
-      durations = settings.allDurations;
-      setState(() {
-        totalDuration = durations[currentIndex];
-        remaining = totalDuration;
-        isLoaded = true;
-      });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final doc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+        final data = doc.data();
+
+        final focusTime = data?['focusTime'] ?? 25;
+        final revisionTime = data?['revisionTime'] ?? 4;
+        final shortBreak = data?['shortBreak'] ?? 5;
+
+        durations = [
+          Duration(minutes: focusTime),
+          Duration(minutes: revisionTime),
+          Duration(minutes: shortBreak),
+        ];
+
+        setState(() {
+          totalDuration = durations[currentIndex];
+          remaining = totalDuration;
+          isLoaded = true;
+        });
+      }
     });
+  }
+
+  void _startFocusSound() async {
+    await audioPlayer.play(AssetSource('sounds/start_focus.mp3'));
+  }
+
+  void _overFocusSound() async {
+    await audioPlayer.play(AssetSource('sounds/over_focus.mp3'));
+  }
+
+  void _startRevisionSound() async {
+    await audioPlayer.play(AssetSource('sounds/start_revision.mp3'));
+  }
+
+  void _overRevisionSound() async {
+    await audioPlayer.play(AssetSource('sounds/over_revision.mp3'));
+  }
+
+  void _startBreakSound() async {
+    await audioPlayer.play(AssetSource('sounds/start_break.mp3'));
+  }
+
+  void _overBreakSound() async {
+    await audioPlayer.play(AssetSource('sounds/over_break.mp3'));
   }
 
   void startTimer() {
@@ -42,15 +99,26 @@ class _TimePageState extends State<TimePage> {
     startTime = DateTime.now();
 
     timer = Timer.periodic(Duration(milliseconds: 100), (_) {
-      final elapsed = DateTime.now().difference(startTime!);
-      final elapsedMs = elapsed.inMilliseconds;
-
+      final elapsed =
+          DateTime.now().difference(startTime!); // Calculate elapsed time
+      final elapsedMs = elapsed.inMilliseconds; // Convert to milliseconds
+      // _startFocusSound();
       if (elapsedMs < totalDuration.inMilliseconds) {
         setState(() {
           remaining = totalDuration - Duration(milliseconds: elapsedMs);
         });
       } else {
-        _playSound();
+        if (currentIndex + 1 == 1) {
+          _overFocusSound(); // Play sound only for the first step
+          _startRevisionSound();
+        } else if (currentIndex + 1 == 2) {
+          _overRevisionSound();
+          _startBreakSound();
+        } else if (currentIndex + 1 == 3) {
+          _overBreakSound();
+        }
+        print("Timer finished for step ${currentIndex + 1}");
+        _overFocusSound();
         timer?.cancel();
 
         if (currentIndex < durations.length - 1) {
@@ -91,10 +159,6 @@ class _TimePageState extends State<TimePage> {
     final elapsed = totalDuration - remaining;
     return (elapsed.inMilliseconds / totalDuration.inMilliseconds)
         .clamp(0.0, 1.0);
-  }
-
-  void _playSound() async {
-    await audioPlayer.play(AssetSource('sounds/focus.mp3'));
   }
 
   @override

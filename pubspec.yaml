@@ -46,9 +46,13 @@ dev_dependencies:
   
   
   flutter_lints: ^4.0.0
-  audioplayers: ^5.2.0
+  audioplayers: ^5.2.1
   percent_indicator: ^4.2.5
   provider: ^6.1.1
+  firebase_core: ^3.10.1
+  google_sign_in: ^6.2.2
+  firebase_auth: ^5.4.1
+  cloud_firestore: ^5.0.1
 
 
 
@@ -61,7 +65,13 @@ flutter:
   
   uses-material-design: true
   assets:
-    - assets/sounds/f.mp3
+    - assets/sounds/over_focus.mp3
+    - assets/sounds/start_focus.mp3
+    - assets/sounds/start_revision.mp3
+    - assets/sounds/over_revision.mp3
+    - assets/sounds/start_break.mp3
+    - assets/sounds/over_break.mp3
+    - assets/images/google.png
 
   
   
