@@ -28,7 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
         email: email,
         password: password,
       );
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/login');
     } on FirebaseAuthException catch (e) {
       setState(() => errorMessage = e.message ?? "Registration failed.");
     }

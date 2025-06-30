@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:promodoor/pages/time_table_page.dart';
 import '../pages/user_page.dart';
 import '../widgets/left_menu.dart';
 import '../pages/time_page.dart';
@@ -18,6 +19,9 @@ class _DashboardLayoutState extends State<DashboardLayout> {
       switch (page) {
         case 'time':
           _currentPage = TimePage();
+          break;
+        case 'table':
+          _currentPage = TimeTablePage();
           break;
         case 'settings':
           _currentPage = SettingsPage();
