@@ -53,6 +53,7 @@ dev_dependencies:
   google_sign_in: ^6.2.2
   firebase_auth: ^5.4.1
   cloud_firestore: ^5.0.1
+  intl: ^0.18.1 # for date formatting
 
 
 

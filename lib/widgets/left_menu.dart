@@ -29,7 +29,7 @@ class LeftMenu extends StatelessWidget {
           Column(
             children: [
               _buildButton(Icons.access_time, "Timer", "time"),
-              _buildButton(Icons.timeline, "Time Table", "table"),
+              _buildButton(Icons.timeline, "Daily Tasks", "table"),
               _buildButton(Icons.settings, "Settings", "settings"),
             ],
           ),

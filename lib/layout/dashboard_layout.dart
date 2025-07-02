@@ -21,7 +21,7 @@ class _DashboardLayoutState extends State<DashboardLayout> {
           _currentPage = TimePage();
           break;
         case 'table':
-          _currentPage = TimeTablePage();
+          _currentPage = DailyTaskPage();
           break;
         case 'settings':
           _currentPage = SettingsPage();
